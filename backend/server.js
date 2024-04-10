@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import path from "path";
+import userRouter from "./routes/userRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 import cookieParser from "cookie-parser";
 
@@ -14,6 +16,9 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

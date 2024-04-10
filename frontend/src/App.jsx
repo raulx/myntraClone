@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Navbar from "./components/Navbar";
+import UseNavigationContext from "./hooks/useNavigationContext";
+import DesktopNavigationMenu from "./components/NavigationMenus/DesktopNavigationMenu";
+import PhoneNavigationMenu from "./components/NavigationMenus/PhoneNavigationMenu";
+import { Outlet } from "react-router-dom";
 
+// "https://rich-pear-coyote-wig.cyclic.app/"
+// "http://localhost:3300"
 function App() {
-  const [count, setCount] = useState(0)
+  const { ishover, menuType } = UseNavigationContext();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="bg-neutralgray relative">
+      <nav>
+        {/* note:ishover and menutype states are toggled inside navbar component*/}
+        <Navbar />
+        {/* note:DesktopNavigationMenu and PhoneNavigationMenu are separate navigation 
+        menus for desktop and phone screens any change in one menu must be implemented
+         on the other.  */}
+        {ishover && <DesktopNavigationMenu menuCategory={menuType} />}
+        <PhoneNavigationMenu />
+      </nav>
+      <main>
+        <div className="md:pt-20 pt-16">
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
