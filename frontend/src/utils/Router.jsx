@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import LandingPage from "../pages/LandingPage";
-import AdminPage from "../pages/AdminPage";
+
+import AdminHomePage from "../pages/AdminPages/AdminHomePage";
+import AdminLoginPage from "../pages/AdminPages/AdminLoginPage";
 import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
@@ -12,7 +14,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login/admin",
-    element: <AdminPage />,
+    element: <AdminLoginPage />,
+  },
+  {
+    path: "/page/admin",
+    element: <AdminHomePage />,
   },
   { path: "*", element: <ErrorPage /> },
 ]);

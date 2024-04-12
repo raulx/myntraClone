@@ -1,19 +1,24 @@
 import { useForm } from "react-hook-form";
-import { useLoginAdminMutation } from "../store";
+import { useLoginAdminMutation } from "../../store";
+import { useNavigate } from "react-router-dom";
 
-function AdminPage() {
+function AdminLoginPage() {
   const {
     register,
     handleSubmit,
 
     formState: { errors },
   } = useForm();
-
+  const Navigate = useNavigate();
   const [loginAdmin] = useLoginAdminMutation();
 
   const onSubmit = async (data) => {
-    const res = await loginAdmin({ id: data.id, password: data.password });
-    console.log(res);
+    try {
+      await loginAdmin({ id: data.id, password: data.password });
+      Navigate("/page/admin");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -41,4 +46,4 @@ function AdminPage() {
   );
 }
 
-export default AdminPage;
+export default AdminLoginPage;

@@ -4,7 +4,7 @@ import "@radix-ui/themes/styles.css";
 import { Provider } from "react-redux";
 import store from "./store/index.js";
 import { RouterProvider } from "react-router-dom";
-import NavigationContextProvider from "./context/navigationContext.jsx";
+import NavigationContextProvider from "./context/NavigationContext.jsx";
 import router from "./utils/Router.jsx";
 import "./index.css";
 

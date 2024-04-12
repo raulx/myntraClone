@@ -9,7 +9,7 @@ const generateToken = (res, userId) => {
     path: "/",
     sameSite: "strict",
     secure: true,
-    maxAge: 900000000,
+    maxAge: 24 * 3600 * 1000,
     httpOnly: true,
   });
 };
