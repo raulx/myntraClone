@@ -15,7 +15,6 @@ function AdminLoginPage() {
 
   const onSubmit = async (data) => {
     const res = await loginAdmin({ id: data.id, password: data.password });
-
     if (res.data.status === "fullfilled") {
       dispatch(setAdminAuthentication(true));
       Navigate("/page/admin");
@@ -33,7 +32,6 @@ function AdminLoginPage() {
           {...register("id", { required: true })}
         />
 
-        {/* include validation with required or other standard HTML validation rules */}
         <input
           placeholder="password"
           type="password"

@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
 
 import cookieParser from "cookie-parser";
+import errorHandler from "./middlewares/errorMiddleware.js";
 
 const app = express();
 
@@ -32,6 +33,8 @@ if (process.env.NODE_ENV === "production") {
     res.send("api is running...");
   });
 }
+
+app.use(errorHandler);
 
 connectDB().then(() => {
   app.listen(port, () => {
