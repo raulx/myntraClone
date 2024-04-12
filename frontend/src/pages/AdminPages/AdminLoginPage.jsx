@@ -1,23 +1,26 @@
 import { useForm } from "react-hook-form";
 import { useLoginAdminMutation } from "../../store";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+import { setAdminAuthentication } from "../../store";
 
 function AdminLoginPage() {
-  const {
-    register,
-    handleSubmit,
-
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
+  const [errorMessage, setErrorMessage] = useState("");
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginAdmin] = useLoginAdminMutation();
 
   const onSubmit = async (data) => {
-    try {
-      await loginAdmin({ id: data.id, password: data.password });
+    const res = await loginAdmin({ id: data.id, password: data.password });
+
+    if (res.data.status === "fullfilled") {
+      dispatch(setAdminAuthentication(true));
       Navigate("/page/admin");
-    } catch (err) {
-      console.log(err);
+    } else {
+      setErrorMessage(res.data.message);
     }
   };
 
@@ -37,9 +40,7 @@ function AdminLoginPage() {
           className=" border-2 rounded p-2"
           {...register("password", { required: true })}
         />
-        {/* errors will return when field validation fails  */}
-        {errors.exampleRequired && <span>This field is required</span>}
-
+        <p className="text-red-500 font-bold">{errorMessage}</p>
         <input className="bg-black rounded p-2 text-white" type="submit" />
       </form>
     </div>

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import LandingPage from "../pages/LandingPage";
-
+import ProtectAdminPage from "../hooks/useProtectAdminPage";
 import AdminHomePage from "../pages/AdminPages/AdminHomePage";
 import AdminLoginPage from "../pages/AdminPages/AdminLoginPage";
 import ErrorPage from "../pages/ErrorPage";
@@ -18,7 +18,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/page/admin",
-    element: <AdminHomePage />,
+    element: <ProtectAdminPage />,
+    children: [{ index: true, element: <AdminHomePage /> }],
   },
   { path: "*", element: <ErrorPage /> },
 ]);
