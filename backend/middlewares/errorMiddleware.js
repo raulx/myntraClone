@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-  let statusCode = res.status === 200 ? 500 : res.statusCode;
+  let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
   // if mongoose not found error, set 404 and change error message
   if (err.name === "CastError" && err.kind === "ObjectId") {

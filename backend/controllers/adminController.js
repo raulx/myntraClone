@@ -1,24 +1,20 @@
 import Admin from "../models/adminModel.js";
-import generateToken from "../utils/generateToken.js";
+import asyncHandler from "express-async-handler";
 
-const loginAdmin = async (req, res) => {
+import generateAdminToken from "../utils/generateToken.js";
+
+const loginAdmin = asyncHandler(async (req, res) => {
   const { id, password } = req.body;
-  try {
-    const admin = await Admin.findOne({ id: id });
-
-    if (admin) {
-      if (admin.password === password) {
-        generateToken(res, id);
-        res.json({ status: "fullfilled", admin });
-      } else {
-        throw new Error("Password do not match !");
-      }
+  const admin = await Admin.findOne({ id: id }).select("-_id");
+  if (admin) {
+    if (admin.password === password) {
+      generateAdminToken(res, id);
+      res.status(200).json({ status: 200, admin });
     } else {
-      throw new Error("User not Found");
+      throw new Error("Password do not matched !");
     }
-  } catch (err) {
-    res.json({ status: "error", message: err.message });
+  } else {
+    throw new Error("No User Found with this id");
   }
-};
-
+});
 export { loginAdmin };

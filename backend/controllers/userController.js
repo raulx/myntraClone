@@ -1,7 +1,7 @@
 import Product from "../models/productModel.js";
 
 const loginUser = (req, res) => {
-  res.json({ message: "login successfull" });
+  throw new Error("there are no users.");
 };
 
 const registerUser = async (req, res) => {

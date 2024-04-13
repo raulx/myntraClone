@@ -15,11 +15,12 @@ function AdminLoginPage() {
 
   const onSubmit = async (data) => {
     const res = await loginAdmin({ id: data.id, password: data.password });
-    if (res.data.status === "fullfilled") {
+
+    if (res.data) {
       dispatch(setAdminAuthentication(true));
       Navigate("/page/admin");
     } else {
-      setErrorMessage(res.data.message);
+      setErrorMessage(res.error.data.message);
     }
   };
 
