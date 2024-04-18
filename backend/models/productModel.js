@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  brand: String,
-  title: String,
+  brand: { type: String, required: true },
+  product_id: { type: Number, required: true, unique: true },
+  added_by: String,
+  title: { type: String, required: true },
   ratings: {
     total: { type: Number, default: 0 },
     stars: {
@@ -36,10 +38,13 @@ const productSchema = new mongoose.Schema({
     washcare: String,
     weavetype: String,
   },
-  discount: [],
+  MRP: { type: Number, required: true },
   seller: {
-    name: String,
-    grievanceredressal: { subject: String, writeto: String },
+    name: { type: String, required: true },
+    grievanceredressal: {
+      subject: { type: String, required: true },
+      writeto: { type: String, required: true },
+    },
   },
   images: [],
 });

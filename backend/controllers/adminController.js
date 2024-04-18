@@ -35,8 +35,14 @@ const registerAdmin = asyncHandler(async (req, res) => {
   }
 });
 
-const getAllProducts = asyncHandler(async (req, res) => {
+const addProduct = asyncHandler(async (req, res) => {
   const { userId } = req.token;
-  res.json({ message: "all Products", forId: userId });
+  const { title, brand } = req.body;
+  res.json({
+    message: "products added",
+    forId: userId,
+    title: JSON.parse(title),
+    brand: brand,
+  });
 });
-export { loginAdmin, getAllProducts, registerAdmin };
+export { loginAdmin, addProduct, registerAdmin };
