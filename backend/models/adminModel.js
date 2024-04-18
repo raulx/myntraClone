@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const adminSchema = mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   id: String,
   password: String,
 });
