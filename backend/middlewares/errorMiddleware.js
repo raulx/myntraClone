@@ -6,7 +6,14 @@ const errorHandler = (err, req, res, next) => {
     statusCode = 404;
     message = "Resource not Found";
   }
-
+  // if duplicate key error ,set 409 and change error message
+  else if (err.name === "MongoServerError" && err.code === 11000) {
+    statusCode = 409;
+    message = "Data already exits";
+  } else if (err.name === "ValidationError") {
+    statusCode = 400;
+    message = "Bad Request";
+  }
   res.status(statusCode).json({
     message: message,
     status: statusCode,

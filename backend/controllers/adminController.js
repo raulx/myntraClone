@@ -18,20 +18,15 @@ const loginAdmin = asyncHandler(async (req, res) => {
   }
 });
 
-const registerAdmin = asyncHandler(async (req, res) => {
+const registerAdmin = asyncHandler(async (req, res, next) => {
   const { id, password } = req.body;
-  const adminExits = await Admin.findOne({ id: id });
-  if (adminExits) {
-    throw new Error("Admin already Exits with this id,login to continue");
-  } else {
-    const newUserData = { id: id, password: password };
-    try {
-      const newUser = await Admin.create(newUserData);
-      generateAdminToken(res, newUser.id);
-      res.json({ message: "User created successfully", newUser });
-    } catch (err) {
-      throw new Error(err);
-    }
+  const newUserData = { id: id, password: password };
+  try {
+    const newUser = await Admin.create(newUserData);
+    generateAdminToken(res, newUser.id);
+    res.json({ message: "User created successfully", newUser });
+  } catch (err) {
+    next(err);
   }
 });
 

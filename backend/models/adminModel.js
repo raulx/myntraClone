@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const adminSchema = new mongoose.Schema({
-  id: String,
-  password: String,
+  id: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
 });
 
 adminSchema.pre("save", async function (next) {
