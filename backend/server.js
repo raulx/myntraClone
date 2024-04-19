@@ -7,6 +7,7 @@ import adminRouter from "./routes/adminRoutes.js";
 
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorMiddleware.js";
+import productRouter from "./routes/productRoutes.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/product", productRouter);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
