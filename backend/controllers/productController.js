@@ -39,7 +39,9 @@ const editProduct = asyncHandler(async (req, res, next) => {
 
       updatedData = await Product.findOneAndUpdate(
         { product_id: product_id },
-        { [field]: { [parsed_updated_value.key]: parsed_updated_value.value } },
+        {
+          [`${field}.${parsed_updated_value.key}`]: parsed_updated_value.value,
+        },
         { new: true }
       );
     } else {
