@@ -29,15 +29,20 @@ const editProduct = asyncHandler(async (req, res, next) => {
       case "product_details":
         updatedData = { d: "Product details changed." };
       case "specifications":
-        updatedData = { d: "this is updated data" };
+        updatedData = { d: "specifications  updated" };
         break;
 
       default:
-        updatedData = await Product.findOneAndUpdate(
-          { product_id: product_id },
-          { [field]: updated_value },
-          { new: true }
-        );
+        if (!Product.schema.path(field)) {
+          res.status(400);
+          throw new Error("BAD REQUEST:Invalid field");
+        } else {
+          updatedData = await Product.findOneAndUpdate(
+            { product_id: product_id },
+            { [field]: updated_value },
+            { new: true }
+          );
+        }
     }
 
     res.json({ message: "updated successfully", updated_data: updatedData });
