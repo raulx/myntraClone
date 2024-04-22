@@ -24,28 +24,55 @@ const editProduct = asyncHandler(async (req, res, next) => {
 
   try {
     let updatedData;
-    if (field === "specifications" || field === "product_details") {
-      // while updating specifications ,updated_value must be a json object in this format {key,value} where key is actually the field that needs to be updated.
-      // while updating product_details,updated_value must be a json object in this format {key:[]} where key is actually the field that needs to be updated.
-      let parsed_updated_value;
 
-      // validate updated_value as a json
+    if (field === "specifications" || field === "product_details") {
+      // while updating specifications and product_details ,updated_value must
+      // be a json object in this format {key,value} where key is actually the
+      // field that needs to be updated.
+
+      // validate Subfields inside field
+      const validSubFields = [
+        "product_design_details",
+        "size_and_fit",
+        "material_and_care",
+        "fabric",
+        "fit",
+        "length",
+        "multipacket",
+        "neck",
+        "numberofitems",
+        "occassion",
+        "pattern",
+        "patterncoverage",
+        "printorpatterntype",
+        "sleevelength",
+        "sleevestyling",
+        "sustainable",
+        "washcare",
+        "weavetype",
+      ];
+
       try {
-        parsed_updated_value = JSON.parse(updated_value);
+        const parsed_updated_value = JSON.parse(updated_value);
+        if (!validSubFields.includes(parsed_updated_value.key)) {
+          res.status(400);
+          throw new Error("BAD REQUEST");
+        } else {
+          updatedData = await Product.findOneAndUpdate(
+            { product_id: product_id },
+            {
+              [`${field}.${parsed_updated_value.key}`]:
+                parsed_updated_value.value,
+            },
+            { new: true }
+          );
+        }
       } catch (err) {
         res.status(400);
         throw new Error("BAD REQUEST");
       }
-
-      updatedData = await Product.findOneAndUpdate(
-        { product_id: product_id },
-        {
-          [`${field}.${parsed_updated_value.key}`]: parsed_updated_value.value,
-        },
-        { new: true }
-      );
     } else {
-      // edgecase: validate if invalid field is sent in request.
+      // validate field
       if (!Product.schema.path(field)) {
         res.status(400);
         throw new Error("BAD REQUEST:Invalid field");

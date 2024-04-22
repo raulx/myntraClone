@@ -17,9 +17,9 @@ const productSchema = new mongoose.Schema({
   product_story: { type: String, default: "Unknown" },
 
   product_details: {
-    product_design_details: [],
-    size_and_fit: [],
-    material_and_care: [],
+    product_design_details: { type: String, default: "Unknown" },
+    size_and_fit: { type: String, default: "Unknown" },
+    material_and_care: { type: String, default: "Unknown" },
   },
   specifications: {
     fabric: { type: String, default: "Unknown" },
