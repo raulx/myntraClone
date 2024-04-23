@@ -23,7 +23,7 @@ function AdminLoginPage() {
 
     if (res.data) {
       dispatch(setAdminAuthentication(true));
-      Navigate("/page/admin");
+      Navigate("/page/admin/products");
     } else {
       setErrorMessage(res.error.data.message);
     }
