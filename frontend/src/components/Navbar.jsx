@@ -25,7 +25,7 @@ function DesktopNav() {
     setMenuType("");
   };
   return (
-    <div className="h-full w-full  items-center justify-around md:flex hidden">
+    <div className="h-full w-full items-center justify-around md:flex hidden">
       <div className="flex items-center gap-6 ml-4 h-full">
         <div className="md:flex hidden w-14 h-12">
           <img src="https://res.cloudinary.com/dj5yf27lr/image/upload/v1710335387/ecommerce_assets/s6zpsidolphtf34czzuy.png" />
