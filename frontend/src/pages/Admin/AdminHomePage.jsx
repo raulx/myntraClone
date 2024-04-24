@@ -6,11 +6,12 @@ import { FiBox } from "react-icons/fi";
 import { VscInsert } from "react-icons/vsc";
 import { useState, useEffect } from "react";
 import { TbDeviceAnalytics } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 function AdminHomePage() {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
-  console.log(location.pathname);
+
   useEffect(() => {
     // Set active link based on current route
     switch (location.pathname) {
@@ -34,7 +35,15 @@ function AdminHomePage() {
   return (
     <div className="xl:block hidden h-screen overflow-hidden">
       <div>
-        <AdminPageNavbar />
+        <motion.div
+          key="navbaradmin"
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -10, opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <AdminPageNavbar />
+        </motion.div>
       </div>
       <div className="flex h-full">
         <div className=" border-r-2 px-2 py-4 w-44">
@@ -58,7 +67,13 @@ function AdminHomePage() {
               activeLink === "insert" && "font-extrabold"
             } `}
           >
-            <VscInsert className="text-xl" />
+            <VscInsert
+              className={` ${
+                activeLink === "insert"
+                  ? "text-red-500 scale-110 text-2xl"
+                  : "text-xl"
+              }`}
+            />
             <Link to={"/page/admin/products/insert"}>Insert Product</Link>
           </div>
 
@@ -67,7 +82,13 @@ function AdminHomePage() {
               activeLink === "analytics" && "font-extrabold"
             } `}
           >
-            <TbDeviceAnalytics className="text-xl" />
+            <TbDeviceAnalytics
+              className={` ${
+                activeLink === "analytics"
+                  ? "text-red-500 scale-110 text-2xl"
+                  : "text-xl"
+              }`}
+            />
             <Link to={"/page/admin/products/analytics"}>Analytics</Link>
           </div>
 
@@ -76,7 +97,13 @@ function AdminHomePage() {
               activeLink === "orders" && "font-extrabold"
             } `}
           >
-            <FaBox className="text-xl" />
+            <FaBox
+              className={` ${
+                activeLink === "orders"
+                  ? "text-red-500 scale-110 text-2xl"
+                  : "text-xl"
+              }`}
+            />
             <Link to={"/page/admin/products/orders"}>Orders</Link>
           </div>
         </div>
