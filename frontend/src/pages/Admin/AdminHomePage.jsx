@@ -33,7 +33,7 @@ function AdminHomePage() {
     }
   }, [location]);
   return (
-    <div className="xl:block hidden h-screen">
+    <div className="xl:block hidden h-screen overflow-hidden">
       <div>
         <motion.div
           key="navbaradmin"

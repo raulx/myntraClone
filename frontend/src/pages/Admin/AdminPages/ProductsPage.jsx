@@ -1,5 +1,121 @@
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
+const products = [
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxaxdww",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxawweqewradf",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+  {
+    product_id: "232211",
+    brand: "roadster",
+    title: "dwaxahhhrerds",
+    MRP: "2122",
+    seller_name: "hhrescsd",
+  },
+];
 
 function ProductsPage() {
   const { register, handleSubmit } = useForm();
@@ -40,132 +156,58 @@ function ProductsPage() {
           </div>
         </div>
         <div className="my-2">Total Products:</div>
-        <table className="min-w-full w-[500px] bg-white border text-xs ">
-          <thead className="bg-[#F41CB2] text-white">
-            <tr>
-              <th className="px-4 py-2">ProductId</th>
-              <th className="px-4 py-2">Brand</th>
-              <th className="px-4 py-2">title</th>
-              <th className="px-4 py-2">MRP</th>
-              <th className="px-4 py-2">seller_name</th>
-            </tr>
-          </thead>
 
-          <tbody className=" overflow-y-scroll">
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2 font-bold">22321</td>
-              <td className="px-4 py-2">roadster</td>
-              <td className="px-4 py-2">new roadster mens tshirt</td>
-              <td className="px-4 py-2">1299</td>
-              <td className="px-4 py-2">roadster limited.</td>
-            </tr>
-            <tr className="bg-white">
-              <td className="px-4 py-2">Data 4</td>
-              <td className="px-4 py-2">Data 5</td>
-              <td className="px-4 py-2">Data 6</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 7</td>
-              <td className="px-4 py-2">Data 8</td>
-              <td className="px-4 py-2">Data 9</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-            <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="w-[540px]">
+          <div className="grid grid-cols-12 bg-[#F41CB2] py-2  border rounded text-white">
+            <div className="col-span-2 flex justify-center items-center">
+              ProductId
+            </div>
+            <div className="col-span-2 flex justify-center items-center">
+              Brand
+            </div>
+            <div className="col-span-3 flex justify-center items-center">
+              Title
+            </div>
+            <div className="col-span-2 flex justify-center items-center">
+              MRP
+            </div>
+            <div className="col-span-3 flex justify-center items-center">
+              seller_name
+            </div>
+          </div>
+          <ScrollArea className="h-[500px]">
+            <div>
+              {products.map((d) => {
+                return (
+                  <div
+                    className="grid cursor-pointer grid-cols-12 my-2 py-2 border-2 bg-[#FFE7F8] font-semibold rounded "
+                    key={d.title}
+                  >
+                    <div className="col-span-2 flex justify-center items-center">
+                      {d.product_id}
+                    </div>
+                    <div className="col-span-2 flex justify-center items-center">
+                      {d.brand}
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center">
+                      {d.title}
+                    </div>
+                    <div className="col-span-2 flex justify-center items-center">
+                      {d.MRP}
+                    </div>
+                    <div className="col-span-3 flex justify-center items-center">
+                      {d.seller_name}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-center items-center mt-4">
+              load more...
+            </div>
+            <ScrollBar orientation="vertical" />
+          </ScrollArea>
+        </div>
       </div>
     </motion.div>
   );
