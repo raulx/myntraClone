@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import NavigationContextProvider from "./context/NavigationContext.jsx";
 import router from "./utils/Router.jsx";
 import "./index.css";
+import "./main.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

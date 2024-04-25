@@ -40,7 +40,7 @@ function ProductsPage() {
           </div>
         </div>
         <div className="my-2">Total Products:</div>
-        <table className="min-w-full bg-white border ">
+        <table className="min-w-full w-[500px] bg-white border text-xs ">
           <thead className="bg-[#F41CB2] text-white">
             <tr>
               <th className="px-4 py-2">ProductId</th>
@@ -53,11 +53,11 @@ function ProductsPage() {
 
           <tbody className=" overflow-y-scroll">
             <tr className="bg-gray-100">
-              <td className="px-4 py-2">Data 1</td>
-              <td className="px-4 py-2">Data 2</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
-              <td className="px-4 py-2">Data 3</td>
+              <td className="px-4 py-2 font-bold">22321</td>
+              <td className="px-4 py-2">roadster</td>
+              <td className="px-4 py-2">new roadster men's tshirt</td>
+              <td className="px-4 py-2">1299</td>
+              <td className="px-4 py-2">roadster limited.</td>
             </tr>
             <tr className="bg-white">
               <td className="px-4 py-2">Data 4</td>
