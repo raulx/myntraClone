@@ -55,7 +55,7 @@ function ProductsPage() {
             <tr className="bg-gray-100">
               <td className="px-4 py-2 font-bold">22321</td>
               <td className="px-4 py-2">roadster</td>
-              <td className="px-4 py-2">new roadster men's tshirt</td>
+              <td className="px-4 py-2">new roadster mens tshirt</td>
               <td className="px-4 py-2">1299</td>
               <td className="px-4 py-2">roadster limited.</td>
             </tr>
