@@ -1,37 +1,20 @@
 import { Navbar, Image } from "react-bootstrap";
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { TypographyH3 } from "../../components/Typography/Typography.jsx";
 import { FaBuildingColumns, FaBox } from "react-icons/fa6";
 import { FiBox } from "react-icons/fi";
 import { VscInsert } from "react-icons/vsc";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { TbDeviceAnalytics } from "react-icons/tb";
 import { motion } from "framer-motion";
 
 function AdminHomePage() {
-  const location = useLocation();
-  const [activeLink, setActiveLink] = useState("");
+  const [activeLink, setActiveLink] = useState("products");
 
-  useEffect(() => {
-    // Set active link based on current route
-    switch (location.pathname) {
-      case "/page/admin/products":
-        setActiveLink("products");
-        break;
-      case "/page/admin/products/insert":
-        setActiveLink("insert");
-        break;
-      case "/page/admin/products/analytics":
-        setActiveLink("analytics");
-        break;
-      case "/page/admin/products/orders":
-        setActiveLink("orders");
-        break;
-      default:
-        setActiveLink("");
-        break;
-    }
-  }, [location]);
+  const handleClick = (clickedLink) => {
+    setActiveLink(clickedLink);
+  };
+
   return (
     <div className="xl:block hidden h-screen overflow-hidden">
       <div>
@@ -59,7 +42,14 @@ function AdminHomePage() {
                   : "text-xl"
               }`}
             />
-            <Link to={"/page/admin/products"}>See Products</Link>
+            <Link
+              to={"/page/admin/products"}
+              onClick={() => {
+                handleClick("products");
+              }}
+            >
+              See Products
+            </Link>
           </div>
 
           <div
@@ -74,7 +64,12 @@ function AdminHomePage() {
                   : "text-xl"
               }`}
             />
-            <Link to={"/page/admin/products/insert"}>Insert Product</Link>
+            <Link
+              to={"/page/admin/products/insert"}
+              onClick={() => handleClick("insert")}
+            >
+              Insert Product
+            </Link>
           </div>
 
           <div
@@ -89,7 +84,12 @@ function AdminHomePage() {
                   : "text-xl"
               }`}
             />
-            <Link to={"/page/admin/products/analytics"}>Analytics</Link>
+            <Link
+              to={"/page/admin/products/analytics"}
+              onClick={() => handleClick("analytics")}
+            >
+              Analytics
+            </Link>
           </div>
 
           <div
@@ -104,7 +104,12 @@ function AdminHomePage() {
                   : "text-xl"
               }`}
             />
-            <Link to={"/page/admin/products/orders"}>Orders</Link>
+            <Link
+              to={"/page/admin/products/orders"}
+              onClick={() => handleClick("orders")}
+            >
+              Orders
+            </Link>
           </div>
         </div>
         <div>

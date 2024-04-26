@@ -1,6 +1,6 @@
 import Admin from "../models/adminModel.js";
 import asyncHandler from "express-async-handler";
-
+import Product from "../models/productModel.js";
 import generateAdminToken from "../utils/generateToken.js";
 
 const loginAdmin = asyncHandler(async (req, res) => {
@@ -30,4 +30,18 @@ const registerAdmin = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { loginAdmin, registerAdmin };
+const getAllProducts = asyncHandler(async (req, res, next) => {
+  try {
+    const products = await Product.find({});
+    const totalProducts = await Product.countDocuments();
+    res.json({
+      message: "all your products are here",
+      products: products,
+      total: totalProducts,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+export { loginAdmin, registerAdmin, getAllProducts };
