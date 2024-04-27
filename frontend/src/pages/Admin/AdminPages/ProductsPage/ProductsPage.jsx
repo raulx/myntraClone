@@ -25,7 +25,7 @@ function ProductsPage() {
       className="px-2"
     >
       <div className="flex gap-2">
-        <div className="flex flex-col h-[630px] rounded border shadow overflow-hidden bg-[#FFF8F8] py-2">
+        <div className="flex flex-col h-[630px] w-[44%] rounded border shadow overflow-hidden bg-[#FFF8F8] py-2">
           <div className="flex items-center justify-end px-2">
             <div className="self-end">
               <form
@@ -110,7 +110,7 @@ function ProductsPage() {
             )}
           </div>
         </div>
-        <div>
+        <div className="w-[56%] flex-grow">
           <Outlet />
         </div>
       </div>

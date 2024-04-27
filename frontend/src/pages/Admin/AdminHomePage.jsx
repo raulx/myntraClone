@@ -112,7 +112,7 @@ function AdminHomePage() {
             </Link>
           </div>
         </div>
-        <div>
+        <div className="flex-grow">
           <Outlet />
         </div>
       </div>
