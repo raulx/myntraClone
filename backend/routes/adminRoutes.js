@@ -3,6 +3,7 @@ import {
   loginAdmin,
   registerAdmin,
   getAllProducts,
+  getSingleProduct,
 } from "../controllers/adminController.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
 const adminRouter = express.Router();
@@ -10,6 +11,9 @@ const adminRouter = express.Router();
 adminRouter.route("/login").post(loginAdmin);
 
 adminRouter.route("/register").post(registerAdmin);
-adminRouter.route("/products/getproducts").get(verifyAdmin, getAllProducts);
+adminRouter.route("/products/getAllProducts").get(verifyAdmin, getAllProducts);
+adminRouter
+  .route("/products/getSingleProduct")
+  .get(verifyAdmin, getSingleProduct);
 
 export default adminRouter;

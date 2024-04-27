@@ -17,7 +17,15 @@ const productApi = createApi({
       getProducts: builder.query({
         query: () => {
           return {
-            url: "/admin/products/getproducts",
+            url: "/admin/products/getAllProducts",
+            method: "GET",
+          };
+        },
+      }),
+      getSingleProduct: builder.query({
+        query: (productId) => {
+          return {
+            url: `/admin/products/getSingleProduct?product_id=${productId}`,
             method: "GET",
           };
         },
@@ -26,6 +34,11 @@ const productApi = createApi({
   },
 });
 
-export const { useGetProductsQuery, useLazyGetProductsQuery } = productApi;
+export const {
+  useGetProductsQuery,
+  useLazyGetProductsQuery,
+  useGetSingleProductQuery,
+  useLazyGetSingleProductQuery,
+} = productApi;
 
 export default productApi;

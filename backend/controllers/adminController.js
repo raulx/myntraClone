@@ -44,4 +44,14 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { loginAdmin, registerAdmin, getAllProducts };
+const getSingleProduct = asyncHandler(async (req, res, next) => {
+  const { product_id } = req.query;
+  try {
+    const product = await Product.findOne({ product_id: product_id });
+    res.json({ message: "here is your product", product: product });
+  } catch (err) {
+    next(err);
+  }
+});
+
+export { loginAdmin, registerAdmin, getAllProducts, getSingleProduct };
