@@ -14,6 +14,18 @@ const productApi = createApi({
   }),
   endpoints(builder) {
     return {
+      editProductDetails: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "getSingleProduct" }];
+        },
+        query: (data) => {
+          return {
+            url: "/product/edit",
+            method: "PATCH",
+            body: { ...data },
+          };
+        },
+      }),
       getProducts: builder.query({
         query: () => {
           return {
@@ -23,6 +35,9 @@ const productApi = createApi({
         },
       }),
       getSingleProduct: builder.query({
+        providesTags: () => {
+          return [{ type: "getSingleProduct" }];
+        },
         query: (productId) => {
           return {
             url: `/admin/products/getSingleProduct?product_id=${productId}`,
@@ -39,6 +54,7 @@ export const {
   useLazyGetProductsQuery,
   useGetSingleProductQuery,
   useLazyGetSingleProductQuery,
+  useEditProductDetailsMutation,
 } = productApi;
 
 export default productApi;
