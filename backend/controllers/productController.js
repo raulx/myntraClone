@@ -21,16 +21,17 @@ const addProduct = asyncHandler(async (req, res, next) => {
 
 const editProduct = asyncHandler(async (req, res, next) => {
   const { product_id, field, updated_value } = req.body;
-
+  console.log(product_id, field, updated_value);
   try {
     let updatedData;
 
     if (field === "specifications" || field === "product_details") {
       // while updating specifications and product_details ,updated_value must
-      // be a json object in this format {key,value} where key is actually the
+      // be a json object in this format {field,value} where field is actually the
       // field that needs to be updated.
 
       // validate Subfields inside field
+      console.log("entered product_details");
       const validSubFields = [
         "product_design_details",
         "size_and_fit",
@@ -54,14 +55,14 @@ const editProduct = asyncHandler(async (req, res, next) => {
 
       try {
         const parsed_updated_value = JSON.parse(updated_value);
-        if (!validSubFields.includes(parsed_updated_value.key)) {
+        if (!validSubFields.includes(parsed_updated_value.field)) {
           res.status(400);
           throw new Error("BAD REQUEST");
         } else {
           updatedData = await Product.findOneAndUpdate(
             { product_id: product_id },
             {
-              [`${field}.${parsed_updated_value.key}`]:
+              [`${field}.${parsed_updated_value.field}`]:
                 parsed_updated_value.value,
             },
             { new: true }

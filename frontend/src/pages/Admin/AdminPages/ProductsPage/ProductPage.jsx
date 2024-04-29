@@ -1,10 +1,10 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import {
-  useEditProductDetailsMutation,
-  useGetSingleProductQuery,
-} from "@/store";
+import { useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+
+import EditableRegularTextField, {
+  NestedProductDetailFeild,
+} from "@/components/EditableTextField";
 
 function PreProductPage() {
   return (
@@ -15,44 +15,16 @@ function PreProductPage() {
 }
 
 function ProductPage() {
-  const [editState, setEditState] = useState({
-    isEditing: false,
-    field: "",
-    value: "",
-  });
-
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
   const { data, isLoading } = useGetSingleProductQuery(productId);
-  const [editProduct] = useEditProductDetailsMutation();
-
-  const handleEdit = ({ field, value }) => {
-    setEditState((prevValue) => {
-      return { ...prevValue, isEditing: true, field: field, value: value };
-    });
-  };
-  const handleSave = async () => {
-    const newData = {
-      product_id: productId,
-      field: editState.field,
-      updated_value: editState.value,
-    };
-    try {
-      await editProduct(newData);
-      setEditState((prevValue) => {
-        return { ...prevValue, isEditing: false };
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <>
       {isLoading ? (
         <div>data is loading...</div>
       ) : (
-        <ScrollArea className="h-[62%] w-[700px] my-2 px-4">
+        <ScrollArea className="h-[40%] w-[700px] my-2 px-4">
           <div className=" bg-red-200 p-4 flex flex-col gap-4 rounded border">
             <div className="bg-white p-4 rounded flex gap-4 items-center border-2 border-[#ffc9ef]">
               <div className="flex flex-col gap-4 items-center">
@@ -115,179 +87,24 @@ function ProductPage() {
             </div>
             <div className="p-4 bg-white rounded flex gap-6 border-[1px]">
               <div className="flex flex-col gap-4 w-3/5 my-4">
-                <div>
-                  <span className="font-bold">Title: </span>
-                  {editState.isEditing && editState.field === "title" ? (
-                    <div className="flex gap-4">
-                      <input
-                        className="px-2 rounded border-2 flex-grow"
-                        value={editState.value}
-                        onChange={(e) =>
-                          setEditState((prevValue) => {
-                            return { ...prevValue, value: e.target.value };
-                          })
-                        }
-                      />
-                      <button
-                        onClick={handleSave}
-                        className="bg-green-500 rounded text-white border-2 px-2 py-1"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {data.product.title}
+                <EditableRegularTextField
+                  fieldName={"title"}
+                  productData={data}
+                />
+                <EditableRegularTextField
+                  fieldName={"brand"}
+                  productData={data}
+                />
+                <EditableRegularTextField
+                  fieldName={"product_story"}
+                  productData={data}
+                />
 
-                      <button
-                        onClick={() =>
-                          handleEdit({
-                            field: "title",
-                            value: data.product.title,
-                          })
-                        }
-                        className={`bg-red-600 text-white rounded text-sm px-1 m-2 ${
-                          editState.isEditing && "opacity-50 cursor-not-allowed"
-                        }`}
-                        disabled={editState.isEditing}
-                      >
-                        Edit
-                      </button>
-                    </>
-                  )}
-                </div>
-                <div>
-                  <span className="font-bold">Brand: </span>
-                  {editState.isEditing && editState.field === "brand" ? (
-                    <div className="flex gap-4">
-                      <input
-                        className="px-2 rounded border-2 flex-grow"
-                        value={editState.value}
-                        onChange={(e) =>
-                          setEditState((prevValue) => {
-                            return { ...prevValue, value: e.target.value };
-                          })
-                        }
-                      />
-                      <button
-                        onClick={handleSave}
-                        className="bg-green-500 rounded text-white border-2 px-2 py-1"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {data.product.brand}
+                <EditableRegularTextField
+                  fieldName={"MRP"}
+                  productData={data}
+                />
 
-                      <button
-                        onClick={() =>
-                          handleEdit({
-                            field: "brand",
-                            value: data.product.brand,
-                          })
-                        }
-                        className="bg-red-600 text-white rounded text-sm px-1 m-2"
-                      >
-                        Edit
-                      </button>
-                    </>
-                  )}
-                </div>
-                {/* <div>
-                  <h1>
-                    <span className="font-bold">Brand: </span>
-                    {data.product.brand}
-                  </h1>
-                </div> */}
-                {/* <div>
-                  <h1>
-                    <span className="font-bold">Product Story:</span>
-                    {data.product.product_story}
-                  </h1>
-                </div> */}
-                <div>
-                  <span className="font-bold">Product Story: </span>
-                  {editState.isEditing &&
-                  editState.field === "product_story" ? (
-                    <div className="flex gap-4">
-                      <input
-                        className="px-2 rounded border-2 flex-grow"
-                        value={editState.value}
-                        onChange={(e) =>
-                          setEditState((prevValue) => {
-                            return { ...prevValue, value: e.target.value };
-                          })
-                        }
-                      />
-                      <button
-                        onClick={handleSave}
-                        className="bg-green-500 rounded text-white border-2 px-2 py-1"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {data.product.product_story}
-
-                      <button
-                        onClick={() =>
-                          handleEdit({
-                            field: "product_story",
-                            value: data.product.product_story,
-                          })
-                        }
-                        className="bg-red-600 text-white rounded text-sm px-1 m-2"
-                      >
-                        Edit
-                      </button>
-                    </>
-                  )}
-                </div>
-                <div>
-                  <span className="font-bold">MRP: </span>
-                  {editState.isEditing && editState.field === "MRP" ? (
-                    <div className="flex gap-4">
-                      <input
-                        className="px-2 rounded border-2 flex-grow"
-                        value={editState.value}
-                        onChange={(e) =>
-                          setEditState((prevValue) => {
-                            return { ...prevValue, value: e.target.value };
-                          })
-                        }
-                      />
-                      <button
-                        onClick={handleSave}
-                        className="bg-green-500 rounded text-white border-2 px-2 py-1"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {data.product.MRP}
-
-                      <button
-                        onClick={() =>
-                          handleEdit({
-                            field: "MRP",
-                            value: data.product.MRP,
-                          })
-                        }
-                        className="bg-red-600 text-white rounded text-sm px-1 m-2"
-                      >
-                        Edit
-                      </button>
-                    </>
-                  )}
-                </div>
-                {/* <div>
-                  <h1>
-                    <span className="font-bold">MRP:</span> {data.product.MRP}
-                  </h1>
-                </div> */}
                 <div className="border border-gray-400 rounded px-2 flex flex-col gap-4 py-4">
                   <h1 className="text-center font-extrabold text-orange-600">
                     Product details:
@@ -295,10 +112,13 @@ function ProductPage() {
                   {Object.entries(data.product.product_details).map(
                     ([property, value]) => {
                       return (
-                        <div key={property}>
-                          <h1 className="font-bold">{property}:</h1>
-                          <p className="text-[14px]">{value}</p>
-                        </div>
+                        <NestedProductDetailFeild
+                          field={property}
+                          key={property}
+                          currentValue={value}
+                          productId={data.product.product_id}
+                          fieldType="product_details"
+                        />
                       );
                     }
                   )}
@@ -312,12 +132,13 @@ function ProductPage() {
                 {Object.entries(data.product.specifications).map(
                   ([property, value]) => {
                     return (
-                      <div key={property}>
-                        <h1>
-                          <span className="font-bold">{property} </span>
-                          {value}
-                        </h1>
-                      </div>
+                      <NestedProductDetailFeild
+                        field={property}
+                        key={property}
+                        currentValue={value}
+                        productId={data.product.product_id}
+                        fieldType="specifications"
+                      />
                     );
                   }
                 )}
