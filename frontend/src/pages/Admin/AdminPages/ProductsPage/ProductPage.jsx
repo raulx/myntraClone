@@ -1,12 +1,13 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import EditableRegularTextField, {
   NestedProductDetailFeild,
 } from "@/components/EditableTextField";
+import ImageBox from "@/components/ImageBox";
 
 function PreProductPage() {
   return (
@@ -28,69 +29,7 @@ function ProductPage() {
       ) : (
         <ScrollArea className="h-[40%] w-[700px] my-2 px-4">
           <div className=" bg-red-200 p-4 flex flex-col gap-4 rounded border">
-            <div className="bg-white p-4 rounded flex gap-4 items-center border-2 border-[#ffc9ef]">
-              <div className="flex flex-col gap-4 items-center">
-                <div className="grid grid-cols-2 grid-rows-3 h-[140px] w-[140px] gap-2">
-                  <div className="col-span-1 row-span-1 cursor-pointer">
-                    <LazyLoadImage />
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1 bg-gray-200 cursor-pointer">
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1 bg-red-500 cursor-pointer">
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1 bg-yellow-200 cursor-pointer">
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1 bg-orange-400 cursor-pointer">
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="col-span-1 row-span-1 bg-green-300 cursor-pointer">
-                    <img
-                      src="https://picsum.photos/200/300"
-                      className="w-full h-full"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <button className="bg-red-400 text-white rounded-lg py-[2px]">
-                    Delete Image
-                  </button>
-                  <button className="bg-green-400 text-white rounded-lg py-[4px]">
-                    Upload more Images
-                  </button>
-                </div>
-              </div>
-              <div className="w-[450px] h-[300px] border-2">
-                <LazyLoadImage
-                  alt="example image"
-                  src="https://picsum.photos/500/500"
-                  className="h-full w-full"
-                  effect="blur"
-                />
-                {/* <img
-                  src="https://picsum.photos/200/300"
-                  className="w-full h-full"
-                /> */}
-              </div>
-            </div>
+            <ImageBox />
             <div className="text-orange-500 font-extrabold">
               ProductId:{data.product.product_id}
             </div>
