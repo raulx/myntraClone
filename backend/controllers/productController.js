@@ -21,7 +21,6 @@ const addProduct = asyncHandler(async (req, res, next) => {
 
 const editProduct = asyncHandler(async (req, res, next) => {
   const { product_id, field, updated_value } = req.body;
-  console.log(product_id, field, updated_value);
   try {
     let updatedData;
 
@@ -31,7 +30,7 @@ const editProduct = asyncHandler(async (req, res, next) => {
       // field that needs to be updated.
 
       // validate Subfields inside field
-      console.log("entered product_details");
+
       const validSubFields = [
         "product_design_details",
         "size_and_fit",

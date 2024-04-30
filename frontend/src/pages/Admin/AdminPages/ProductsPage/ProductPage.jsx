@@ -1,6 +1,8 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import EditableRegularTextField, {
   NestedProductDetailFeild,
@@ -30,6 +32,7 @@ function ProductPage() {
               <div className="flex flex-col gap-4 items-center">
                 <div className="grid grid-cols-2 grid-rows-3 h-[140px] w-[140px] gap-2">
                   <div className="col-span-1 row-span-1 cursor-pointer">
+                    <LazyLoadImage />
                     <img
                       src="https://picsum.photos/200/300"
                       className="w-full h-full"
@@ -76,10 +79,16 @@ function ProductPage() {
                 </div>
               </div>
               <div className="w-[450px] h-[300px] border-2">
-                <img
+                <LazyLoadImage
+                  alt="example image"
+                  src="https://picsum.photos/500/500"
+                  className="h-full w-full"
+                  effect="blur"
+                />
+                {/* <img
                   src="https://picsum.photos/200/300"
                   className="w-full h-full"
-                />
+                /> */}
               </div>
             </div>
             <div className="text-orange-500 font-extrabold">
