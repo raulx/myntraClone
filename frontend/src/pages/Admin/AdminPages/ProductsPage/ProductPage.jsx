@@ -29,7 +29,7 @@ function ProductPage() {
       ) : (
         <ScrollArea className="h-[40%] w-[700px] my-2 px-4">
           <div className=" bg-red-200 p-4 flex flex-col gap-4 rounded border">
-            <ImageBox />
+            <ImageBox images={data.product.images} />
             <div className="text-orange-500 font-extrabold">
               ProductId:{data.product.product_id}
             </div>
