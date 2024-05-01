@@ -5,6 +5,7 @@ import {
   getAllProducts,
   getSingleProduct,
   addProductImage,
+  deleteProductImage,
 } from "../controllers/adminController.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
 const adminRouter = express.Router();
@@ -20,5 +21,9 @@ adminRouter
 adminRouter
   .route("/products/addProductImage")
   .post(verifyAdmin, addProductImage);
+
+adminRouter
+  .route("/products/deleteImage")
+  .delete(verifyAdmin, deleteProductImage);
 
 export default adminRouter;

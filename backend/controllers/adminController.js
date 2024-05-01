@@ -60,10 +60,23 @@ const addProductImage = asyncHandler(async (req, res, next) => {
   try {
     await Product.findOneAndUpdate(
       { product_id: product_id },
-      { $push: { images: image_info } },
-      { new: true }
+      { $push: { images: image_info } }
     );
     res.json({ status: 200, message: "image saved successfully" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+const deleteProductImage = asyncHandler(async (req, res, next) => {
+  const { productId, imageId } = req.body;
+
+  try {
+    await Product.findOneAndUpdate(
+      { product_id: productId },
+      { $pull: { images: { asset_id: imageId } } }
+    );
+    res.json({ status: 200, message: "image deleted successfully" });
   } catch (err) {
     next(err);
   }
@@ -74,4 +87,5 @@ export {
   getAllProducts,
   getSingleProduct,
   addProductImage,
+  deleteProductImage,
 };

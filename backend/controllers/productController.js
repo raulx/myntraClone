@@ -21,6 +21,7 @@ const addProduct = asyncHandler(async (req, res, next) => {
 
 const editProduct = asyncHandler(async (req, res, next) => {
   const { product_id, field, updated_value } = req.body;
+  console.log(product_id, field, updated_value);
   try {
     let updatedData;
 
@@ -38,7 +39,7 @@ const editProduct = asyncHandler(async (req, res, next) => {
         "fabric",
         "fit",
         "length",
-        "multipacket",
+        "multipackset",
         "neck",
         "numberofitems",
         "occassion",
