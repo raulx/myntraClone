@@ -1,5 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import CloudinaryUploadWidget from "./CloudinaryUploaderWidget";
+
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD;
 
 function ImageBox({ images }) {
   const [selectedImage, setSelectedImage] = useState(images[0]);
@@ -7,6 +11,10 @@ function ImageBox({ images }) {
   useEffect(() => {
     setSelectedImage(images[0]);
   }, [images]);
+
+  const handleImageUpload = async (result) => {
+    console.log(result);
+  };
 
   return (
     <div className="bg-white p-4 rounded flex gap-4 items-center border-2 border-[#ffc9ef]">
@@ -30,9 +38,14 @@ function ImageBox({ images }) {
           <button className="bg-red-400 text-white rounded-lg py-[2px]">
             Delete Image
           </button>
-          <button className="bg-green-400 text-white rounded-lg py-[4px]">
-            Upload Image
-          </button>
+          <CloudinaryUploadWidget
+            uwConfig={{
+              uploadPreset,
+              cloudName,
+              folder: "/ecommerce_assets/ProductImages",
+            }}
+            onUploadDone={handleImageUpload}
+          />
         </div>
       </div>
       <div
