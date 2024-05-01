@@ -54,4 +54,24 @@ const getSingleProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { loginAdmin, registerAdmin, getAllProducts, getSingleProduct };
+const addProductImage = asyncHandler(async (req, res, next) => {
+  const { image_info, product_id } = req.body;
+
+  try {
+    await Product.findOneAndUpdate(
+      { product_id: product_id },
+      { $push: { images: image_info } },
+      { new: true }
+    );
+    res.json({ status: 200, message: "image saved successfully" });
+  } catch (err) {
+    next(err);
+  }
+});
+export {
+  loginAdmin,
+  registerAdmin,
+  getAllProducts,
+  getSingleProduct,
+  addProductImage,
+};

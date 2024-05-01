@@ -14,6 +14,20 @@ const productApi = createApi({
   }),
   endpoints(builder) {
     return {
+      saveProductImage: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "getSingleProduct" }];
+        },
+        query: (data) => {
+          return {
+            url: "/admin/products/addProductImage",
+            method: "POST",
+            body: {
+              ...data,
+            },
+          };
+        },
+      }),
       editProductDetails: builder.mutation({
         invalidatesTags: () => {
           return [{ type: "getSingleProduct" }];
@@ -55,6 +69,7 @@ export const {
   useGetSingleProductQuery,
   useLazyGetSingleProductQuery,
   useEditProductDetailsMutation,
+  useSaveProductImageMutation,
 } = productApi;
 
 export default productApi;
