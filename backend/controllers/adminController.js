@@ -2,6 +2,7 @@ import Admin from "../models/adminModel.js";
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 import generateAdminToken from "../utils/generateToken.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const loginAdmin = asyncHandler(async (req, res) => {
   const { id, password } = req.body;
@@ -69,9 +70,10 @@ const addProductImage = asyncHandler(async (req, res, next) => {
 });
 
 const deleteProductImage = asyncHandler(async (req, res, next) => {
-  const { productId, imageId } = req.body;
+  const { productId, imageId, publicId } = req.body;
 
   try {
+    await cloudinary.uploader.destroy(publicId);
     await Product.findOneAndUpdate(
       { product_id: productId },
       { $pull: { images: { asset_id: imageId } } }
@@ -81,6 +83,7 @@ const deleteProductImage = asyncHandler(async (req, res, next) => {
     next(err);
   }
 });
+
 export {
   loginAdmin,
   registerAdmin,

@@ -4,7 +4,7 @@ import connectDB from "./config/db.js";
 import path from "path";
 import userRouter from "./routes/userRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
-
+import connectCloudinary from "./config/cloudinary.js";
 import cookieParser from "cookie-parser";
 import errorHandler from "./middlewares/errorMiddleware.js";
 import productRouter from "./routes/productRoutes.js";
@@ -12,6 +12,7 @@ import productRouter from "./routes/productRoutes.js";
 const app = express();
 
 dotenv.config();
+connectCloudinary();
 
 const port = process.env.PORT || 3000;
 

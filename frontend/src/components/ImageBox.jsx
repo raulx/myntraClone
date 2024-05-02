@@ -39,8 +39,8 @@ function ImageBox({ images, product_id }) {
     }
   };
 
-  const handleImageDelete = async (imgId, product_id) => {
-    const body = { imageId: imgId, productId: product_id };
+  const handleImageDelete = async (imgId, publicId, product_id) => {
+    const body = { imageId: imgId, productId: product_id, publicId: publicId };
     try {
       const res = await deleteImage(body);
       console.log(res);
@@ -67,7 +67,11 @@ function ImageBox({ images, product_id }) {
                   <div
                     className="rounded-3xl h-[24px] w-[24px] flex justify-center items-center bg-white border p-[2px] absolute translate-x-1/2 -translate-y-1/2 right-0"
                     onClick={() => {
-                      handleImageDelete(img.asset_id, product_id);
+                      handleImageDelete(
+                        img.asset_id,
+                        img.public_id,
+                        product_id
+                      );
                     }}
                   >
                     <FaTimes />
