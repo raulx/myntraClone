@@ -65,6 +65,7 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
 const getSingleProduct = asyncHandler(async (req, res, next) => {
   const { product_id } = req.query;
+  console.log(product_id);
   try {
     const product = await Product.findOne({ product_id: product_id });
     res.json({ message: "here is your product", product: product });
@@ -102,6 +103,18 @@ const deleteProductImage = asyncHandler(async (req, res, next) => {
   }
 });
 
+const deleteProduct = asyncHandler(async (req, res, next) => {
+  const { product_id } = req.body;
+
+  try {
+    await Product.findOneAndDelete({
+      product_id: product_id,
+    });
+    res.json({ message: "product deleted successfully", status: 200 });
+  } catch (err) {
+    next(err);
+  }
+});
 export {
   loginAdmin,
   registerAdmin,
@@ -110,4 +123,5 @@ export {
   addProductImage,
   deleteProductImage,
   addNewProduct,
+  deleteProduct,
 };

@@ -14,6 +14,18 @@ const productApi = createApi({
   }),
   endpoints(builder) {
     return {
+      deleteProduct: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "getAllProducts" }];
+        },
+        query: (productId) => {
+          return {
+            url: `/admin/products/deleteProduct`,
+            method: "DELETE",
+            body: { product_id: productId },
+          };
+        },
+      }),
       addNewProduct: builder.mutation({
         query: (data) => {
           return {
@@ -66,6 +78,9 @@ const productApi = createApi({
         },
       }),
       getProducts: builder.query({
+        providesTags: () => {
+          return [{ type: "getAllProducts" }];
+        },
         query: () => {
           return {
             url: "/admin/products/getAllProducts",
@@ -97,6 +112,7 @@ export const {
   useSaveProductImageMutation,
   useDeleteProductImageMutation,
   useAddNewProductMutation,
+  useDeleteProductMutation,
 } = productApi;
 
 export default productApi;

@@ -23,6 +23,7 @@ function AddProductPage() {
       console.log(err);
     }
   };
+
   return (
     <motion.div
       key="addproducts"

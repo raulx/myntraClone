@@ -1,5 +1,5 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useGetSingleProductQuery } from "@/store";
+import { useDeleteProductMutation, useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
@@ -22,7 +22,15 @@ function ProductPage() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
   const { data, isLoading } = useGetSingleProductQuery(productId);
+  const [deleteProduct] = useDeleteProductMutation();
 
+  const handleProductDelete = async (productId) => {
+    try {
+      await deleteProduct(productId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -98,7 +106,10 @@ function ProductPage() {
                 )}
               </div>
             </div>
-            <button className="p-2 bg-red-600 text-white rounded w-32 self-end">
+            <button
+              className="p-2 bg-red-600 text-white rounded w-32 self-end"
+              onClick={() => handleProductDelete(productId)}
+            >
               Remove Item
             </button>
           </div>
