@@ -4,6 +4,24 @@ import Product from "../models/productModel.js";
 import generateAdminToken from "../utils/generateToken.js";
 import { v2 as cloudinary } from "cloudinary";
 
+const addNewProduct = asyncHandler(async (req, res, next) => {
+  const { userId } = req.token;
+  const { title, brand, product_id, MRP } = req.body;
+  const newData = {
+    title: title,
+    brand: brand,
+    product_id: product_id,
+    MRP: MRP,
+    added_by: userId,
+  };
+  try {
+    const newProduct = await Product.create(newData);
+    res.json({ message: "products added", data: newProduct });
+  } catch (err) {
+    next(err);
+  }
+});
+
 const loginAdmin = asyncHandler(async (req, res) => {
   const { id, password } = req.body;
   const admin = await Admin.findOne({ id: id }).select("-_id");
@@ -91,4 +109,5 @@ export {
   getSingleProduct,
   addProductImage,
   deleteProductImage,
+  addNewProduct,
 };

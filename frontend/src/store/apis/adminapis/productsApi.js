@@ -14,6 +14,17 @@ const productApi = createApi({
   }),
   endpoints(builder) {
     return {
+      addNewProduct: builder.mutation({
+        query: (data) => {
+          return {
+            url: "/admin/products/addNewProduct",
+            method: "POST",
+            body: {
+              ...data,
+            },
+          };
+        },
+      }),
       deleteProductImage: builder.mutation({
         invalidatesTags: () => {
           return [{ type: "getSingleProduct" }];
@@ -85,6 +96,7 @@ export const {
   useEditProductDetailsMutation,
   useSaveProductImageMutation,
   useDeleteProductImageMutation,
+  useAddNewProductMutation,
 } = productApi;
 
 export default productApi;

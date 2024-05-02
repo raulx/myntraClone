@@ -1,6 +1,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -25,7 +26,9 @@ function ProductPage() {
   return (
     <>
       {isLoading ? (
-        <div>data is loading...</div>
+        <div className="h-screen flex justify-center items-center w-full bg-red">
+          <ClipLoader color="#f22" />
+        </div>
       ) : (
         <ScrollArea className="h-[38%] w-[700px] my-2 px-4">
           <div className=" bg-red-200 p-4 flex flex-col gap-4 rounded border">

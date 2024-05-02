@@ -42,8 +42,7 @@ function ImageBox({ images, product_id }) {
   const handleImageDelete = async (imgId, publicId, product_id) => {
     const body = { imageId: imgId, productId: product_id, publicId: publicId };
     try {
-      const res = await deleteImage(body);
-      console.log(res);
+      await deleteImage(body);
     } catch (err) {
       console.log(err);
     }

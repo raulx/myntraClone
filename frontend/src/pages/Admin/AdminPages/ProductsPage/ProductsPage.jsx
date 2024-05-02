@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetProductsQuery } from "@/store";
-
+import { ClipLoader } from "react-spinners";
 function ProductsPage() {
   const { register, handleSubmit } = useForm();
   const [searchParams] = useSearchParams();
@@ -52,7 +52,7 @@ function ProductsPage() {
             {data ? <span>{data.total}</span> : <span>loading...</span>}
           </div>
 
-          <div className="w-[540px]">
+          <div className="w-[540px] flex flex-col">
             <div className="px-4">
               <div className="grid grid-cols-12 bg-[#F41CB2] py-2  border rounded text-white">
                 <div className="col-span-2 flex justify-center items-center">
@@ -70,7 +70,9 @@ function ProductsPage() {
               </div>
             </div>
             {isLoading ? (
-              <div>Data is loading...</div>
+              <div className="h-[500px] w-full flex justify-center items-center">
+                <ClipLoader color="#f22" />
+              </div>
             ) : (
               <ScrollArea className="h-[500px] px-4 ">
                 <div>
