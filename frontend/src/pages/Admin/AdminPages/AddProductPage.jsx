@@ -1,16 +1,14 @@
 import { useAddNewProductMutation } from "@/store";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import toast from "react-hot-toast";
+import { FaSpinner } from "react-icons/fa";
 
 function AddProductPage() {
-  const [addNewProduct] = useAddNewProductMutation();
-  const [errorMessage, setErrorMessage] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [addNewProduct, { isLoading: addingProduct }] =
+    useAddNewProductMutation();
+
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     const newProductData = {
@@ -21,9 +19,13 @@ function AddProductPage() {
     };
     try {
       const res = await addNewProduct(newProductData);
-      console.log(res);
+      if (res.data?.status === 200) {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.error.data.message);
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
 
@@ -70,10 +72,16 @@ function AddProductPage() {
               {...register("MRP", { required: true, max: 100000 })}
             />
           </div>
-          <input
+          <button
             type="submit"
-            className="bg-[#FF912E] font-bold  p-2 rounded hover:bg-orange-500 w-1/4 cursor-pointer transition-all duration-75 my-4"
-          />
+            className="bg-[#FF912E] font-bold  p-2 rounded hover:bg-orange-500 w-1/4 h-12 flex justify-center items-center cursor-pointer transition-all duration-75 my-4"
+          >
+            {addingProduct ? (
+              <FaSpinner className="animate-spin text-white text-2xl" />
+            ) : (
+              <>Submit</>
+            )}
+          </button>
         </form>
       </div>
     </motion.div>

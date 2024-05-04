@@ -5,18 +5,20 @@ import generateAdminToken from "../utils/generateToken.js";
 import { v2 as cloudinary } from "cloudinary";
 
 const addNewProduct = asyncHandler(async (req, res, next) => {
-  const { userId } = req.token;
   const { title, brand, product_id, MRP } = req.body;
   const newData = {
     title: title,
     brand: brand,
     product_id: product_id,
     MRP: MRP,
-    added_by: userId,
   };
   try {
     const newProduct = await Product.create(newData);
-    res.json({ message: "products added", data: newProduct });
+    res.json({
+      message: "product added successfully",
+      status: 200,
+      data: newProduct,
+    });
   } catch (err) {
     next(err);
   }

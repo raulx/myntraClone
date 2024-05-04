@@ -4,6 +4,7 @@ import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useGetProductsQuery } from "@/store";
 import { ClipLoader } from "react-spinners";
+
 function ProductsPage() {
   const { register, handleSubmit } = useForm();
   const [searchParams] = useSearchParams();

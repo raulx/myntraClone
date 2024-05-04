@@ -6,7 +6,8 @@ import {
   useDeleteProductImageMutation,
   useSaveProductImageMutation,
 } from "@/store";
-import { FaTimes, FaSpinner } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import { ClipLoader } from "react-spinners";
 
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD;
@@ -78,8 +79,8 @@ function ImageBox({ images, product_id }) {
                   </div>
                 )}
                 {isImageDeleting && selectedImage === img.url && (
-                  <div className="absolute top-0 left-0 bg-black opacity-80 w-full h-full flex justify-center items-center">
-                    <FaSpinner className="animate-spin" />
+                  <div className="absolute top-0 left-0  w-full h-full flex justify-center items-center">
+                    <ClipLoader color="#f22" />
                   </div>
                 )}
               </div>
