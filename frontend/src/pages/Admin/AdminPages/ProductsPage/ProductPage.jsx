@@ -2,6 +2,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useDeleteProductMutation, useGetSingleProductQuery } from "@/store";
 import { useSearchParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { FaSpinner, FaTrash } from "react-icons/fa";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -9,6 +10,7 @@ import EditableRegularTextField, {
   NestedProductDetailFeild,
 } from "@/components/EditableTextField";
 import ImageBox from "@/components/ImageBox";
+import toast from "react-hot-toast";
 
 function PreProductPage() {
   return (
@@ -22,11 +24,15 @@ function ProductPage() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
   const { data, isLoading } = useGetSingleProductQuery(productId);
-  const [deleteProduct] = useDeleteProductMutation();
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   const handleProductDelete = async (productId) => {
     try {
-      await deleteProduct(productId);
+      const res = await deleteProduct(productId);
+
+      if (res.data.status === 200) {
+        toast.success(res.data.message);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -107,10 +113,14 @@ function ProductPage() {
               </div>
             </div>
             <button
-              className="p-2 bg-red-600 text-white rounded w-32 self-end"
+              className="p-2 bg-red-600 text-white rounded  self-end"
               onClick={() => handleProductDelete(productId)}
             >
-              Remove Item
+              {isDeleting ? (
+                <FaSpinner className="animate-spin" />
+              ) : (
+                <FaTrash />
+              )}
             </button>
           </div>
           <ScrollBar />

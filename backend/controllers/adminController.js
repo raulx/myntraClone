@@ -65,7 +65,7 @@ const getAllProducts = asyncHandler(async (req, res, next) => {
 
 const getSingleProduct = asyncHandler(async (req, res, next) => {
   const { product_id } = req.query;
-  console.log(product_id);
+
   try {
     const product = await Product.findOne({ product_id: product_id });
     res.json({ message: "here is your product", product: product });
@@ -107,6 +107,16 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   const { product_id } = req.body;
 
   try {
+    // first destroy the images stored in the cloudinary cloud.
+    const { images } = await Product.findOne(
+      { product_id: product_id },
+      "images"
+    );
+
+    for (const image of images) {
+      await cloudinary.uploader.destroy(image.public_id);
+    }
+
     await Product.findOneAndDelete({
       product_id: product_id,
     });

@@ -6,7 +6,7 @@ import {
   useDeleteProductImageMutation,
   useSaveProductImageMutation,
 } from "@/store";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSpinner } from "react-icons/fa";
 
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_PRESET;
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD;
@@ -15,7 +15,8 @@ function ImageBox({ images, product_id }) {
   const [selectedImage, setSelectedImage] = useState("");
   const [isDelete, setIsDelete] = useState(false);
   const [saveProductImage] = useSaveProductImageMutation();
-  const [deleteImage] = useDeleteProductImageMutation();
+  const [deleteImage, { isLoading: isImageDeleting }] =
+    useDeleteProductImageMutation();
 
   useEffect(() => {
     setSelectedImage(() => {
@@ -74,6 +75,11 @@ function ImageBox({ images, product_id }) {
                     }}
                   >
                     <FaTimes />
+                  </div>
+                )}
+                {isImageDeleting && selectedImage === img.url && (
+                  <div className="absolute top-0 left-0 bg-black opacity-80 w-full h-full flex justify-center items-center">
+                    <FaSpinner className="animate-spin" />
                   </div>
                 )}
               </div>

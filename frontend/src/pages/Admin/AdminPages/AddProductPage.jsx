@@ -1,8 +1,11 @@
 import { useAddNewProductMutation } from "@/store";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+
 function AddProductPage() {
   const [addNewProduct] = useAddNewProductMutation();
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,

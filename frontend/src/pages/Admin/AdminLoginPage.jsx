@@ -19,13 +19,16 @@ function AdminLoginPage() {
   const [loginAdmin, results] = useLoginAdminMutation();
 
   const onSubmit = async (data) => {
-    const res = await loginAdmin({ id: data.id, password: data.password });
-
-    if (res.data) {
-      dispatch(setAdminAuthentication(true));
-      Navigate("/page/admin/products");
-    } else {
-      setErrorMessage(res.error.data.message);
+    try {
+      const res = await loginAdmin({ id: data.id, password: data.password });
+      if (res.data) {
+        dispatch(setAdminAuthentication(true));
+        Navigate("/page/admin/products");
+      } else {
+        setErrorMessage(res.error.data.message);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 

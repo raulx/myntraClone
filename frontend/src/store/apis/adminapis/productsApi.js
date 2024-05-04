@@ -27,6 +27,9 @@ const productApi = createApi({
         },
       }),
       addNewProduct: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "getAllProducts" }];
+        },
         query: (data) => {
           return {
             url: "/admin/products/addNewProduct",

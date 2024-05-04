@@ -7,6 +7,7 @@ import { VscInsert } from "react-icons/vsc";
 import { useState } from "react";
 import { TbDeviceAnalytics } from "react-icons/tb";
 import { motion } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 
 function AdminHomePage() {
   const [activeLink, setActiveLink] = useState("products");
@@ -116,6 +117,7 @@ function AdminHomePage() {
           <Outlet />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
