@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useEditProductDetailsMutation } from "@/store";
+import { FaSpinner } from "react-icons/fa6";
 
 function EditableRegularTextField({ fieldName, productData }) {
   const [editState, setEditState] = useState({
@@ -8,7 +9,8 @@ function EditableRegularTextField({ fieldName, productData }) {
     field: "",
     value: "",
   });
-  const [editProduct] = useEditProductDetailsMutation();
+  const [editProduct, { isLoading: editingProduct }] =
+    useEditProductDetailsMutation();
 
   const handleEdit = ({ field, value }) => {
     setEditState((prevValue) => {
@@ -48,7 +50,11 @@ function EditableRegularTextField({ fieldName, productData }) {
             onClick={handleSave}
             className="bg-green-500 rounded text-white border-2 px-2 py-1"
           >
-            Save
+            {editingProduct ? (
+              <FaSpinner className="animate-spin" />
+            ) : (
+              <>Save</>
+            )}
           </button>
         </div>
       ) : (
@@ -83,7 +89,8 @@ function NestedProductDetailFeild({
     field: "",
     updatedValue: "",
   });
-  const [editProduct] = useEditProductDetailsMutation();
+  const [editProduct, { isLoading: editingData }] =
+    useEditProductDetailsMutation();
   const handleEdit = () => {
     setEditState(() => {
       return { ...editState, isEditing: true, updatedValue: currentValue };
@@ -127,7 +134,7 @@ function NestedProductDetailFeild({
             onClick={handleSave}
             className="bg-green-500 rounded text-white border-2 px-2 py-1"
           >
-            Save
+            {editingData ? <FaSpinner className="animate-spin" /> : <>Save</>}
           </button>
         </div>
       ) : (
