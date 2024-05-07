@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useGetProductsQuery, useLazyGetProductsQuery } from "@/store";
+import { useGetProductsQuery } from "@/store";
 import { setProductData } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
