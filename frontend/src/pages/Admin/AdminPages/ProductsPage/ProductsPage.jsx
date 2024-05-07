@@ -2,16 +2,20 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useGetProductsQuery } from "@/store";
+import { useGetProductsQuery, useLazyGetSingleProductQuery } from "@/store";
 import { setProductData } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+import { HiRefresh } from "react-icons/hi";
 import { ClipLoader } from "react-spinners";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 function ProductsPage() {
   const { register, handleSubmit } = useForm();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
+  const [getSingleProduct, { isLoading: isLoadingSingleProduct }] =
+    useLazyGetSingleProductQuery();
   const { data, isLoading } = useGetProductsQuery();
   const { total, products } = useSelector((state) => {
     return state.productData;
@@ -22,7 +26,17 @@ function ProductsPage() {
     : null;
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      const res = await getSingleProduct(data.productId);
+
+      if (res.data.status === 200) {
+        dispatch(setProductData({ total: 1, products: [res.data.product] }));
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
 
   useEffect(() => {
@@ -52,7 +66,7 @@ function ProductsPage() {
 
                 <input
                   type="number"
-                  {...register("productSearch", { required: true })}
+                  {...register("productId", { required: true })}
                   className="px-2 rounded-md border-2 border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 />
 
@@ -63,9 +77,24 @@ function ProductsPage() {
               </form>
             </div>
           </div>
-          <div className="my-2 px-4 font-extrabold">
-            Total Products:
-            {!isLoading ? <span>{total}</span> : <span>loading...</span>}
+          <div className="my-2 px-4 font-extrabold flex justify-between">
+            <div>
+              Total Products:
+              {!isLoading || !isLoadingSingleProduct ? (
+                <span>{total}</span>
+              ) : (
+                <span>loading...</span>
+              )}
+            </div>
+
+            <HiRefresh
+              className="cursor-pointer"
+              onClick={() =>
+                dispatch(
+                  setProductData({ total: data.total, products: data.products })
+                )
+              }
+            />
           </div>
 
           <div className="w-[540px] flex flex-col">
@@ -85,7 +114,7 @@ function ProductsPage() {
                 </div>
               </div>
             </div>
-            {isLoading ? (
+            {isLoading || isLoadingSingleProduct ? (
               <div className="h-[500px] w-full flex justify-center items-center">
                 <ClipLoader color="#f22" />
               </div>
@@ -120,9 +149,9 @@ function ProductsPage() {
                     );
                   })}
                 </div>
-                <div className="flex justify-center items-center mt-4 cursor-pointer">
+                {/* <div className="flex justify-center items-center mt-4 cursor-pointer">
                   load more...
-                </div>
+                </div> */}
                 <ScrollBar orientation="vertical" className="hidden" />
               </ScrollArea>
             )}

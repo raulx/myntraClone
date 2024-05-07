@@ -70,7 +70,11 @@ const getSingleProduct = asyncHandler(async (req, res, next) => {
 
   try {
     const product = await Product.findOne({ product_id: product_id });
-    res.json({ message: "here is your product", product: product });
+    if (product) {
+      res.json({ status: 200, product: product });
+    } else {
+      res.json({ status: 404, message: "No Product Found!" });
+    }
   } catch (err) {
     next(err);
   }
