@@ -2,19 +2,34 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useGetProductsQuery } from "@/store";
+import { useGetProductsQuery, useLazyGetProductsQuery } from "@/store";
+import { setProductData } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
+import { useEffect } from "react";
 
 function ProductsPage() {
   const { register, handleSubmit } = useForm();
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
   const { data, isLoading } = useGetProductsQuery();
+  const { total, products } = useSelector((state) => {
+    return state.productData;
+  });
+
   const productSelected = searchParams
     ? Number(searchParams.get("productId"))
     : null;
+
   const onSubmit = async (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setProductData({ total: data.total, products: data.products }));
+    }
+  }, [data, dispatch]);
 
   return (
     <motion.div
@@ -50,7 +65,7 @@ function ProductsPage() {
           </div>
           <div className="my-2 px-4 font-extrabold">
             Total Products:
-            {data ? <span>{data.total}</span> : <span>loading...</span>}
+            {!isLoading ? <span>{total}</span> : <span>loading...</span>}
           </div>
 
           <div className="w-[540px] flex flex-col">
@@ -77,7 +92,7 @@ function ProductsPage() {
             ) : (
               <ScrollArea className="h-[500px] px-4 ">
                 <div>
-                  {data.products.map((d) => {
+                  {products.map((d) => {
                     return (
                       <Link
                         key={d.title}

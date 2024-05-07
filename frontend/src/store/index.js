@@ -4,6 +4,7 @@ import adminSlice from "./slices/adminSlice";
 import authSlice from "./slices/authslice";
 import authApi from "./apis/authapi";
 import productApi from "./apis/adminapis/productsApi";
+import productDataSlice from "./slices/adminSlices/productDataSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     auth: authSlice,
     admin: adminSlice,
+    productData: productDataSlice,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware()
@@ -23,6 +25,7 @@ export * from "./slices/authslice";
 export * from "./apis/authapi";
 export * from "./apis/adminapis/productsApi";
 export * from "./slices/adminSlice";
+export * from "./slices/adminSlices/productDataSlice";
 setupListeners(store.dispatch);
 
 export default store;
