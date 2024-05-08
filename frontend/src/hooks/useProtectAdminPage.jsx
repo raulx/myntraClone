@@ -1,13 +1,9 @@
 import { Outlet, Navigate } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-
 function ProtectAdminPage() {
-  const { isAuthenticated } = useSelector((state) => {
-    return state.admin;
-  });
+  const isAdminAuthenticated = localStorage.getItem("_ad");
 
-  if (isAuthenticated) {
+  if (isAdminAuthenticated) {
     return <Outlet />;
   } else {
     return <Navigate to={"/login/admin"} />;

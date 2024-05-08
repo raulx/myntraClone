@@ -23,7 +23,7 @@ function AdminLoginPage() {
     try {
       const res = await loginAdmin({ id: data.id, password: data.password });
 
-      if (res.data.status === 200) {
+      if (res.data?.status === 200) {
         dispatch(setAdminAuthenticated(res.data.id));
         Navigate("/page/admin/products");
       } else {

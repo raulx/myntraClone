@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Link, Outlet, useSearchParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useGetProductsQuery, useLazyGetSingleProductQuery } from "@/store";
+import {
+  removeAdminAuthenticated,
+  useLazyGetProductsQuery,
+  useLazyGetSingleProductQuery,
+} from "@/store";
 import { setProductData } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { HiRefresh } from "react-icons/hi";
@@ -14,9 +18,12 @@ function ProductsPage() {
   const { register, handleSubmit } = useForm();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [getSingleProduct, { isLoading: isLoadingSingleProduct }] =
     useLazyGetSingleProductQuery();
-  const { data, isLoading } = useGetProductsQuery();
+  const [getAllProducts, { isLoading: isLoadingAllProducts }] =
+    useLazyGetProductsQuery();
+
   const { total, products } = useSelector((state) => {
     return state.productData;
   });
@@ -40,10 +47,26 @@ function ProductsPage() {
   };
 
   useEffect(() => {
-    if (data) {
-      dispatch(setProductData({ total: data.total, products: data.products }));
-    }
-  }, [data, dispatch]);
+    const fetchAllProducts = async () => {
+      try {
+        const res = await getAllProducts();
+        if (res.status === "fulfilled") {
+          dispatch(
+            setProductData({
+              total: res.data.total,
+              products: res.data.products,
+            })
+          );
+        } else if (res.error?.data.message === "Token Expired !") {
+          dispatch(removeAdminAuthenticated());
+          navigate("/login/admin");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllProducts();
+  }, [getAllProducts, dispatch, navigate]);
 
   return (
     <motion.div
@@ -80,21 +103,14 @@ function ProductsPage() {
           <div className="my-2 px-4 font-extrabold flex justify-between">
             <div>
               Total Products:
-              {!isLoading || !isLoadingSingleProduct ? (
+              {!isLoadingAllProducts || !isLoadingSingleProduct ? (
                 <span>{total}</span>
               ) : (
                 <span>loading...</span>
               )}
             </div>
 
-            <HiRefresh
-              className="cursor-pointer"
-              onClick={() =>
-                dispatch(
-                  setProductData({ total: data.total, products: data.products })
-                )
-              }
-            />
+            <HiRefresh className="cursor-pointer" />
           </div>
 
           <div className="w-[540px] flex flex-col">
@@ -114,7 +130,7 @@ function ProductsPage() {
                 </div>
               </div>
             </div>
-            {isLoading || isLoadingSingleProduct ? (
+            {isLoadingAllProducts || isLoadingSingleProduct ? (
               <div className="h-[500px] w-full flex justify-center items-center">
                 <ClipLoader color="#f22" />
               </div>
@@ -124,7 +140,7 @@ function ProductsPage() {
                   {products.map((d) => {
                     return (
                       <Link
-                        key={d.title}
+                        key={d.product_id}
                         to={`/page/admin/products/product/?productId=${d.product_id}`}
                       >
                         <div
