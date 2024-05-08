@@ -2,10 +2,10 @@ import { useForm } from "react-hook-form";
 import { useLoginAdminMutation } from "../../store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RingLoader from "../../components/RingLoader";
 
-import { setAdminAuthentication } from "../../store";
+import { setAdminAuthenticated } from "../../store";
 
 function AdminLoginPage() {
   const {
@@ -17,12 +17,14 @@ function AdminLoginPage() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginAdmin, results] = useLoginAdminMutation();
+  const isAlreadyAuthenticated = localStorage.getItem("_ad");
 
   const onSubmit = async (data) => {
     try {
       const res = await loginAdmin({ id: data.id, password: data.password });
-      if (res.data) {
-        dispatch(setAdminAuthentication(true));
+
+      if (res.data.status === 200) {
+        dispatch(setAdminAuthenticated(res.data.id));
         Navigate("/page/admin/products");
       } else {
         setErrorMessage(res.error.data.message);
@@ -31,6 +33,12 @@ function AdminLoginPage() {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (isAlreadyAuthenticated) {
+      Navigate("/page/admin/products");
+    }
+  }, [isAlreadyAuthenticated, Navigate]);
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">

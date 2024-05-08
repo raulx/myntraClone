@@ -26,11 +26,11 @@ const addNewProduct = asyncHandler(async (req, res, next) => {
 
 const loginAdmin = asyncHandler(async (req, res) => {
   const { id, password } = req.body;
-  const admin = await Admin.findOne({ id: id }).select("-_id");
+  const admin = await Admin.findOne({ id: id });
   if (admin) {
     if (await admin.matchPassword(password)) {
       generateAdminToken(res, id);
-      res.status(200).json({ status: 200, admin });
+      res.status(200).json({ status: 200, id: admin._id });
     } else {
       throw new Error("Password do not matched !");
     }
