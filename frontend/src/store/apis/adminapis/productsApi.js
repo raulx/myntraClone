@@ -14,6 +14,14 @@ const productApi = createApi({
   }),
   endpoints(builder) {
     return {
+      searchProductById: builder.query({
+        query: (product_id) => {
+          return {
+            url: `/admin/products/dynamicProductSearch?product_id=${product_id}`,
+            method: "GET",
+          };
+        },
+      }),
       deleteProduct: builder.mutation({
         invalidatesTags: () => {
           return [{ type: "getAllProducts" }];
@@ -116,6 +124,8 @@ export const {
   useDeleteProductImageMutation,
   useAddNewProductMutation,
   useDeleteProductMutation,
+  useSearchProductByIdQuery,
+  useLazySearchProductByIdQuery,
 } = productApi;
 
 export default productApi;

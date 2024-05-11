@@ -7,6 +7,7 @@ import {
   addProductImage,
   deleteProductImage,
   deleteProduct,
+  dynamicProductSearchById,
 } from "../controllers/adminController.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
 import { addNewProduct } from "../controllers/adminController.js";
@@ -30,4 +31,8 @@ adminRouter
 
 adminRouter.route("/products/addNewProduct").post(verifyAdmin, addNewProduct);
 adminRouter.route("/products/deleteProduct").delete(verifyAdmin, deleteProduct);
+adminRouter
+  .route("/products/dynamicProductSearch")
+  .get(verifyAdmin, dynamicProductSearchById);
+
 export default adminRouter;

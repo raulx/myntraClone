@@ -113,7 +113,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   const { product_id } = req.body;
 
   try {
-    // first destroy the images stored in the cloudinary cloud.
+    // first destroy the images stored in the cloud(cloudinary).
     const { images } = await Product.findOne(
       { product_id: product_id },
       "images"
@@ -131,6 +131,24 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     next(err);
   }
 });
+
+const dynamicProductSearchById = asyncHandler(async (req, res, next) => {
+  const { product_id } = req.query;
+
+  let products;
+  if (product_id === "") {
+    products = await Product.find({}).limit(15);
+  } else {
+    const queryId = Number(product_id);
+
+    products = await Product.find({
+      product_id: { $gte: queryId },
+    });
+  }
+
+  res.json({ status: 200, products: products });
+});
+
 export {
   loginAdmin,
   registerAdmin,
@@ -140,4 +158,5 @@ export {
   deleteProductImage,
   addNewProduct,
   deleteProduct,
+  dynamicProductSearchById,
 };
