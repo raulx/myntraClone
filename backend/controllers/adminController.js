@@ -132,11 +132,11 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
   }
 });
 
-const dynamicProductSearchById = asyncHandler(async (req, res, next) => {
+const dynamicProductSearchById = asyncHandler(async (req, res) => {
   const { product_id } = req.query;
 
   let products;
-  console.log(product_id);
+
   if (product_id === "") {
     products = await Product.find({}).limit(15);
   } else {

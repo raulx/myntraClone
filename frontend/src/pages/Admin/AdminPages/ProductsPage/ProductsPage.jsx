@@ -35,18 +35,16 @@ function ProductsPage() {
 
     try {
       const res = await searchProductById(productId);
-      console.log(res);
-      if (res?.data.status === 200) {
+
+      if (res.data.status === 200) {
         dispatch(
           setProductData({
             total: res.data.products.length,
             products: [...res.data.products],
           })
         );
-      } else if (res?.data.status === 404) {
+      } else if (res.data.status === 404) {
         dispatch(setProductData({ total: 0, products: null }));
-      } else {
-        throw new Error("Error Fetching The data");
       }
     } catch (err) {
       toast.error(err.message);

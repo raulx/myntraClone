@@ -1,9 +1,11 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useDeleteProductMutation, useGetSingleProductQuery } from "@/store";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { FaSpinner, FaTrash } from "react-icons/fa";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProductById } from "@/store";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import EditableRegularTextField, {
@@ -13,6 +15,18 @@ import ImageBox from "@/components/ImageBox";
 import toast from "react-hot-toast";
 
 function PreProductPage() {
+  const navigate = useNavigate();
+  const { products } = useSelector((state) => {
+    return state.productData;
+  });
+  // show the if product when product data gets loaded
+  useEffect(() => {
+    if (products[0]) {
+      navigate(
+        `/page/admin/products/product/?productId=${products[0].product_id}`
+      );
+    }
+  }, [navigate, products]);
   return (
     <div className="p-4 bg-green-400">
       Select product, to see the content inside.
@@ -23,7 +37,13 @@ function PreProductPage() {
 function ProductPage() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("productId");
-  const { data, isLoading } = useGetSingleProductQuery(productId);
+  const { data, isLoading, isError } = useGetSingleProductQuery(productId);
+  const navigate = useNavigate();
+  const { products } = useSelector((state) => {
+    return state.productData;
+  });
+  const dispatch = useDispatch();
+
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
 
   const handleProductDelete = async (productId) => {
@@ -32,11 +52,23 @@ function ProductPage() {
 
       if (res.data.status === 200) {
         toast.success(res.data.message);
+        dispatch(removeProductById(productId));
+
+        navigate(
+          `/page/admin/products/product/?productId=${
+            products[products.length - 2].product_id
+          }`
+        );
       }
     } catch (err) {
       console.log(err);
     }
   };
+
+  if (isError) {
+    toast.error("Network Error");
+    navigate("/page/admin/products/");
+  }
 
   return (
     <>
