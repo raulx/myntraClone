@@ -4,13 +4,14 @@ import { TypographyH3 } from "../../components/Typography/Typography.jsx";
 import { FaBuildingColumns, FaBox } from "react-icons/fa6";
 import { FiBox } from "react-icons/fi";
 import { VscInsert } from "react-icons/vsc";
-import { useState } from "react";
 import { TbDeviceAnalytics } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
+import UseAdminActiveLinkContext from "@/hooks/useAdminActiveLinkContext.jsx";
 
 function AdminHomePage() {
-  const [activeLink, setActiveLink] = useState("products");
+  // const [activeLink, setActiveLink] = useState("products");
+  const { activeLink, setActiveLink } = UseAdminActiveLinkContext();
 
   const handleClick = (clickedLink) => {
     setActiveLink(clickedLink);

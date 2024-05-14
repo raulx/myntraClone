@@ -1,12 +1,16 @@
+import UseAdminActiveLinkContext from "@/hooks/useAdminActiveLinkContext";
 import { useAddNewProductMutation } from "@/store";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 function AddProductPage() {
   const [addNewProduct, { isLoading: addingProduct }] =
     useAddNewProductMutation();
+  const { setActiveLink } = UseAdminActiveLinkContext();
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
@@ -21,6 +25,8 @@ function AddProductPage() {
       const res = await addNewProduct(newProductData);
       if (res.data?.status === 200) {
         toast.success(res.data.message);
+        setActiveLink("products");
+        navigate(`/page/admin/products/`);
       } else {
         toast.error(res.error.data.message);
       }

@@ -19,14 +19,16 @@ function PreProductPage() {
   const { products } = useSelector((state) => {
     return state.productData;
   });
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get("productId");
   // show the if product when product data gets loaded
   useEffect(() => {
-    if (products[0]) {
+    if (productId != "" && products[0]) {
       navigate(
         `/page/admin/products/product/?productId=${products[0].product_id}`
       );
     }
-  }, [navigate, products]);
+  }, [navigate, products, productId]);
   return (
     <div className="p-4 bg-green-400">
       Select product, to see the content inside.
