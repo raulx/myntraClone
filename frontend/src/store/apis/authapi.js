@@ -13,6 +13,14 @@ const authApi = createApi({
   }),
   endpoints(builder) {
     return {
+      logoutAdmin: builder.mutation({
+        query: () => {
+          return {
+            url: "/admin/logout",
+            method: "POST",
+          };
+        },
+      }),
       loginAdmin: builder.mutation({
         query: ({ id, password }) => {
           return {
@@ -36,6 +44,10 @@ const authApi = createApi({
   },
 });
 
-export const { useRegisterUserMutation, useLoginAdminMutation } = authApi;
+export const {
+  useRegisterUserMutation,
+  useLoginAdminMutation,
+  useLogoutAdminMutation,
+} = authApi;
 
 export default authApi;

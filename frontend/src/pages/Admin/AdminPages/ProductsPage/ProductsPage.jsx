@@ -19,7 +19,7 @@ function ProductsPage() {
   const navigate = useNavigate();
   const [searchProductById, { isFetching: isLoadingProduct }] =
     useLazySearchProductByIdQuery();
-  const [getAllProducts, { isLoading: isLoadingAllProducts }] =
+  const [getAllProducts, { isFetching: isLoadingAllProducts }] =
     useLazyGetProductsQuery();
 
   const { total, products } = useSelector((state) => {

@@ -7,6 +7,7 @@ import {
   addProductImage,
   deleteProductImage,
   deleteProduct,
+  logoutAdmin,
   dynamicProductSearchById,
 } from "../controllers/adminController.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
@@ -14,6 +15,7 @@ import { addNewProduct } from "../controllers/adminController.js";
 const adminRouter = express.Router();
 
 adminRouter.route("/login").post(loginAdmin);
+adminRouter.route("/logout").post(logoutAdmin);
 
 adminRouter.route("/register").post(registerAdmin);
 adminRouter.route("/products/getAllProducts").get(verifyAdmin, getAllProducts);

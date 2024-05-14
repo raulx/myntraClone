@@ -39,6 +39,13 @@ const loginAdmin = asyncHandler(async (req, res) => {
   }
 });
 
+const logoutAdmin = asyncHandler(async (req, res) => {
+  res.cookie("_adt", "", { httpOnly: true, maxAge: new Date(0) });
+  res
+    .status(200)
+    .json({ status: res.statusCode, message: "successfully logged out" });
+});
+
 const registerAdmin = asyncHandler(async (req, res, next) => {
   const { id, password } = req.body;
   const newUserData = { id: id, password: password };
@@ -164,6 +171,7 @@ export {
   getSingleProduct,
   addProductImage,
   deleteProductImage,
+  logoutAdmin,
   addNewProduct,
   deleteProduct,
   dynamicProductSearchById,

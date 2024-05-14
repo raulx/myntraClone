@@ -57,9 +57,7 @@ function ProductPage() {
         dispatch(removeProductById(productId));
 
         navigate(
-          `/page/admin/products/product/?productId=${
-            products[products.length - 2].product_id
-          }`
+          `/page/admin/products/product/?productId=${products[0].product_id}`
         );
       }
     } catch (err) {

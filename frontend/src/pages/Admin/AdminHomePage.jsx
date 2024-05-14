@@ -1,5 +1,5 @@
 import { Navbar, Image } from "react-bootstrap";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { TypographyH3 } from "../../components/Typography/Typography.jsx";
 import { FaBuildingColumns, FaBox } from "react-icons/fa6";
 import { FiBox } from "react-icons/fi";
@@ -7,10 +7,15 @@ import { VscInsert } from "react-icons/vsc";
 import { TbDeviceAnalytics } from "react-icons/tb";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
+import { HiLogout } from "react-icons/hi";
 import UseAdminActiveLinkContext from "@/hooks/useAdminActiveLinkContext.jsx";
+import {
+  removeAdminAuthenticated,
+  useLogoutAdminMutation,
+} from "@/store/index.js";
+import { useDispatch } from "react-redux";
 
 function AdminHomePage() {
-  // const [activeLink, setActiveLink] = useState("products");
   const { activeLink, setActiveLink } = UseAdminActiveLinkContext();
 
   const handleClick = (clickedLink) => {
@@ -124,6 +129,20 @@ function AdminHomePage() {
 }
 
 function AdminPageNavbar() {
+  const [logoutAdmin] = useLogoutAdminMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const res = await logoutAdmin();
+      if (res.data.status === 200) {
+        dispatch(removeAdminAuthenticated());
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Navbar className="w-full h-full border-b-2 py-2 px-8 flex justify-between items-center">
       <Navbar.Brand href="#home">
@@ -138,8 +157,14 @@ function AdminPageNavbar() {
           <FaBuildingColumns className="text-black" />
         </TypographyH3>
       </div>
-      <div>
-        <p>Admin</p>
+      <div
+        className="p-2 bg-pink-50 hover:bg-pink-100 transition-all duration-75 rounded-lg cursor-pointer"
+        onClick={handleLogout}
+      >
+        <div className="flex flex-col justify-center items-center">
+          <HiLogout className="text-lg" />
+          <span className="text-sm">Logout</span>
+        </div>
       </div>
     </Navbar>
   );

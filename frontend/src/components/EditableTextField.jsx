@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useEditProductDetailsMutation } from "@/store";
 import { FaSpinner } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 
 function EditableRegularTextField({ fieldName, productData }) {
   const [editState, setEditState] = useState({
@@ -68,9 +69,9 @@ function EditableRegularTextField({ fieldName, productData }) {
                 value: productData.product[fieldName],
               })
             }
-            className="bg-red-600 text-white rounded text-sm px-1 m-2"
+            className="text-red-600 text-lg rounded px-1 m-2"
           >
-            Edit
+            <FaEdit />
           </button>
         </>
       )}
@@ -141,10 +142,10 @@ function NestedProductDetailFeild({
         <div className="flex items-center justify-between">
           <h1>{currentValue}</h1>
           <button
-            className="bg-red-600 text-white rounded text-sm px-1 m-2"
+            className="text-red-600 rounded text-lg  px-1 m-2"
             onClick={handleEdit}
           >
-            Edit
+            <FaEdit />
           </button>
         </div>
       )}
