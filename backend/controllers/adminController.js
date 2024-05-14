@@ -136,13 +136,21 @@ const dynamicProductSearchById = asyncHandler(async (req, res, next) => {
   const { product_id } = req.query;
 
   let products;
+  console.log(product_id);
   if (product_id === "") {
     products = await Product.find({}).limit(15);
   } else {
     const queryId = Number(product_id);
 
+    const regExp = new RegExp(queryId);
+
     products = await Product.find({
-      product_id: { $gte: queryId },
+      $expr: {
+        $regexMatch: {
+          input: { $toString: `$product_id` },
+          regex: regExp,
+        },
+      },
     });
   }
 

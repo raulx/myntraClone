@@ -37,6 +37,7 @@ function ProductPage() {
       console.log(err);
     }
   };
+
   return (
     <>
       {isLoading ? (
