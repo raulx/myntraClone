@@ -9,6 +9,7 @@ import ProductAnalyticsPage from "./pages/Admin/AdminPages/ProductAnalyticsPage"
 import AdminLoginPage from "./pages/Admin/AdminLoginPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProductsPage from "./pages/Admin/AdminPages/ProductsPage/ProductsPage";
+import QueryPage from "./pages/QueryPage";
 import ProductPage, {
   PreProductPage,
 } from "./pages/Admin/AdminPages/ProductsPage/ProductPage";
@@ -17,7 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    children: [{ index: true, element: <LandingPage /> }],
+    children: [
+      { index: true, element: <LandingPage /> },
+      { path: "/:query", element: <QueryPage /> },
+    ],
   },
   {
     path: "/login/admin",

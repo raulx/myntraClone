@@ -5,41 +5,12 @@ import Footer from "../../components/Footer";
 import AutoSlider from "../../components/AutoSlider";
 import Carousel from "../../components/Carousel";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useRegisterUserMutation } from "../../store";
-import { setMessage } from "../../store";
 
 function LandingPagePhone() {
   const [showFooter, setShowFooter] = useState(false);
 
-  const { message } = useSelector((state) => {
-    return state.auth;
-  });
-  const dispatch = useDispatch();
-  const [conn, setConn] = useState(false);
-  const [registerUser] = useRegisterUserMutation();
-  const handleClick = async () => {
-    setConn(true);
-    try {
-      const res = await registerUser({
-        name: "rahul",
-        email: "raulx103@gmail.com",
-        password: "android16",
-      });
-
-      dispatch(setMessage(res.data.message));
-    } catch (err) {
-      console.log(err);
-    }
-    setConn(false);
-  };
   return (
     <div className="bg-white mt-1">
-      <div className="flex justify-between">
-        <h1>{conn ? <>connecting backend....</> : <>{message}</>} </h1>
-        <button onClick={handleClick}>connect backend</button>
-      </div>
       <div className="flex flex-col gap-4">
         <HorizontalSlider>
           {FirstSliderData.map((d) => {

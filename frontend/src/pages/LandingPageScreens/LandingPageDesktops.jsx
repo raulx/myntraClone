@@ -1,42 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
 import Carousel from "../../components/Carousel";
 import Footer from "../../components/Footer";
-import { useRegisterUserMutation } from "../../store";
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { setMessage } from "../../store";
 
 function LandingPageDesktop() {
-  const { message } = useSelector((state) => {
-    return state.auth;
-  });
-  const dispatch = useDispatch();
-  const [conn, setConn] = useState(false);
-  const [registerUser] = useRegisterUserMutation();
-  const handleClick = async () => {
-    setConn(true);
-    try {
-      const res = await registerUser({
-        name: "rahul",
-        email: "raulx103@gmail.com",
-        password: "android16",
-      });
-
-      dispatch(setMessage(res.data.message));
-    } catch (err) {
-      console.log(err);
-    }
-    setConn(false);
-  };
   return (
     <div className="bg-white pt-8 mt-2 flex flex-col gap-12">
-      <div className="flex justify-between">
-        <div className="px-4 py-2 bg-black text-white font-bold">
-          <Link to="/login/admin">Admin</Link>
-        </div>
-        <h1>{conn ? <>connecting backend....</> : <>{message}</>} </h1>
-        <button onClick={handleClick}>connect backend</button>
-      </div>
       <Carousel
         slides={6}
         speed={1000}

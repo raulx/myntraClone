@@ -1,7 +1,7 @@
 import { CiUser, CiHeart, CiSearch, CiSquarePlus } from "react-icons/ci";
 import { PiBagSimpleLight } from "react-icons/pi";
-import { useState } from "react";
 import { HiMiniBars3 } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 import UseNavigationContext from "../hooks/useNavigationContext";
 
 function Navbar() {
@@ -13,7 +13,6 @@ function Navbar() {
   );
 }
 function DesktopNav() {
-  const [isSearchFocussed, setIsSearchFocussed] = useState(false);
   const { menuType, setIsHover, setMenuType } = UseNavigationContext();
 
   const handleMouseEnter = (d) => {
@@ -28,7 +27,9 @@ function DesktopNav() {
     <div className="h-full w-full items-center justify-around md:flex hidden">
       <div className="flex items-center gap-6 ml-4 h-full">
         <div className="md:flex hidden w-14 h-12">
-          <img src="https://res.cloudinary.com/dj5yf27lr/image/upload/v1710335387/ecommerce_assets/s6zpsidolphtf34czzuy.png" />
+          <Link to="/">
+            <img src="https://res.cloudinary.com/dj5yf27lr/image/upload/v1710335387/ecommerce_assets/s6zpsidolphtf34czzuy.png" />
+          </Link>
         </div>
         <nav className="lg:flex h-full items-center gap-4 hidden">
           <li
@@ -89,17 +90,13 @@ function DesktopNav() {
       </div>
 
       <div
-        className={`p-2 border rounded md:flex hidden w-96  items-center bg-neutralgray gap-4 group group-focus:bg-white ${
-          isSearchFocussed && "bg-white"
-        }`}
+        className={`p-2 border rounded md:flex hidden w-96  items-center gap-4 group group-focus:bg-white`}
       >
         <CiSearch className="text-xl font-bold" />
         <input
           type="text"
-          className="group grow outline-none focus:bg-white bg-neutralgray"
+          className="group grow outline-none focus:bg-white"
           placeholder="Search for products,brands and more"
-          onFocus={() => setIsSearchFocussed(true)}
-          onBlur={() => setIsSearchFocussed(false)}
         />
       </div>
       <div className="gap-8 h-full md:flex hidden">

@@ -37,7 +37,12 @@ function PhoneNavigationMenu() {
                         {item.children.map((item, index) => {
                           return (
                             <li key={index} className="px-4 py-2">
-                              <Link to={item.url}>{item.title}</Link>
+                              <Link
+                                to={item.url}
+                                onClick={() => setPhoneNav(false)}
+                              >
+                                {item.title}
+                              </Link>
                             </li>
                           );
                         })}
@@ -47,7 +52,9 @@ function PhoneNavigationMenu() {
                 } else {
                   return (
                     <div key={index} className="p-4 ">
-                      <Link to={item.url}>{item.title}</Link>
+                      <Link to={item.url} onClick={() => setPhoneNav(false)}>
+                        {item.title}
+                      </Link>
                     </div>
                   );
                 }

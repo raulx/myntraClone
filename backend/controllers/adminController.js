@@ -32,10 +32,10 @@ const loginAdmin = asyncHandler(async (req, res) => {
       generateAdminToken(res, id);
       res.status(200).json({ status: 200, id: admin._id });
     } else {
-      throw new Error("Password do not matched !");
+      throw new Error("Password not matched !");
     }
   } else {
-    throw new Error("No User Found with this id");
+    throw new Error("No Admin Found with this id");
   }
 });
 
